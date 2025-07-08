@@ -1,0 +1,92 @@
+#TitleDiv {
+    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+}
+
+.TitleHeader {
+    color: blue;
+    font-size: clamp(1rem, 5vw, 3.5rem);
+    text-shadow: 1px 1px 1px blue;
+}
+
+.MainDiv {
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #222;
+}
+
+.knappar {
+    margin: 1% auto;
+    justify-content: center;
+    display: flex;
+}
+
+.inputID {
+    justify-content: center;
+    display: flex;
+}
+
+#ErrorMessage {
+    color: red;
+    display: flex;
+    justify-content: center;
+}
+
+#SkapaKnapp {
+    margin: 0.5vw;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#SkapaKnapp:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#AnslutKnapp {
+    margin: 0.5vw;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#AnslutKnapp:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#LowerSection {
+    display: flex;
+    gap: 10px;
+}
+
+#ServerDiv {
+    flex: 1;
+   /* border: 1px solid #333; */
+    padding: 20px;
+    text-align: center;
+}
+
+#InfoSection {
+    flex: 1;
+    border: 1px solid #333;
+    padding: 20px;
+    text-align: center;
+}
