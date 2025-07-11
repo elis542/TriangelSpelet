@@ -29,6 +29,9 @@ public class RestControllerClass {
     @GetMapping("/CreateGame")
     public ResponseEntity<createGameResponse> createGame() {
         ActiveGame newMatch = new ActiveGame();
+        GameHandler.addGame(newMatch);
+        System.out.println("Match created ID: " + newMatch.getId());
+
         createGameResponse answer = new createGameResponse(true, newMatch.getId());
 
         return ResponseEntity.ok(answer);

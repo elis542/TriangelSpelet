@@ -24,5 +24,7 @@ public class ActiveGame {
         return gameId;
     }
 
-
+    public int getNumberOfPlayers() {
+        return players.size();
+    }
 }
