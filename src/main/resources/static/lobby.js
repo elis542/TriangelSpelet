@@ -47,7 +47,7 @@ async function handleMessage(messageJson) {
             } else if (!message.data.state) {
                 socket.close();
                 console.log("Tried to connect to nonexistent game!");
-                window.location.href = "index.html";
+                window.location.href = "mainPage.html";
             }
     }
 }

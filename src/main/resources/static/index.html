@@ -5,41 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Triangel Spelet</title>
+    <title>Triangel-Spelet</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    <p id="StatusMessage">Server Status: loading... </p>
     <main>
         <div class="MainDiv">
-            <div id="TitleDiv">
-                <h1 class="TitleHeader">Triangel-spelet Online</h1>
+            <h1 style="justify-content: center; display: flex;">Välj ditt namn</h1>
+            <h4 style="justify-content: center; display: flex;" id="ErrorMessage"></h4>
+            <div class="inputID" style="padding-top: 7%">
+                <label>Ditt namn:</label>
+                <input id="nameInput"></input>
             </div>
-            <p id="ErrorMessage"></p>
             <div class="inputID">
-                <label for="quantity">Anslut till ID:</label>
-                <input type="number" id="quantity" name="quantity" min="1" max="10000">
+                <button id="fortsattKnapp">Fortsätt</button>
             </div>
-            <div class="knappar">
-                <button id="SkapaKnapp" onclick="createGame()">Skapa</button>
-                <button id="AnslutKnapp" onclick="joinGame()">Anslut</button>
-            </div>
-        </div>
+        </div>    
     </main>
-    <div id="LowerSection">
-        <div id="ServerDiv">
-            <h3 id="TitleDiv">Public servers:</h3>
-            <div id="AvailableServers">
-
-            </div>
-        </div>
-        <div id="InfoSection">
-            <p>Triangel-spelet handlar om att </p>
-        </div>
-    </div>
-    <script src="index.js"></script>
+    <script src="nameSelect.js"></script>
 </body>
 
 </html>
