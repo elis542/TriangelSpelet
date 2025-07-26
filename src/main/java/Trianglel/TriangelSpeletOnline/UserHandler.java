@@ -2,6 +2,7 @@ package Trianglel.TriangelSpeletOnline;
 
 import org.springframework.web.socket.WebSocketSession;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,8 @@ public class UserHandler {
         userList.add(user);
     }
 
-    public static synchronized void removeUser(User user) {
+    public static synchronized void removeUser(User user) throws IOException {
+        user.initiateRemoval();
         userList.remove(user);
     }
 

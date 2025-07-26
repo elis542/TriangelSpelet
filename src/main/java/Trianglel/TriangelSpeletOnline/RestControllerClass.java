@@ -36,4 +36,14 @@ public class RestControllerClass {
 
         return ResponseEntity.ok(answer);
     }
+
+
+    @PostMapping("/joinGame")
+    public ResponseEntity<Boolean> joinGame(@RequestBody String gameId) {
+        ActiveGame temp = GameHandler.getGame(gameId);
+        if (temp == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+        }
+        return ResponseEntity.ok(true);
+    }
 }

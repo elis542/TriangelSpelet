@@ -19,9 +19,9 @@ import java.util.ArrayList;
 @Component
 public class CommunicationHandler extends TextWebSocketHandler {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    public void sendTextMessage(WebSocketSession session, String type, Object data) throws IOException {
+    public static void sendTextMessage(WebSocketSession session, String type, Object data) throws IOException {
         ObjectNode message = mapper.createObjectNode();
         message.put("type", type);
 
@@ -63,25 +63,37 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
                 ActiveGame game = GameHandler.getGame(gameId);
 
-                record responseConnect(boolean state, int players){}
+                record responseConnect(boolean state, ArrayList<String> players) {}
 
                 if (game == null) {
-                    sendTextMessage(session, "connection", new responseConnect(false, -1));
+                    sendTextMessage(session, "connection", new responseConnect(false, null));
                     System.out.println("Player tried connecting to nonexistent game");
                     return;
                 } else {
                     temp.setGame(game);
-                    sendTextMessage(session, "connection", new responseConnect(true, game.getNumberOfPlayers()));
+
+                    sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames()));
                     System.out.println("Player connected to game!");
                 }
+                return;
+
+            case "setName":
+                String name = typeNode.get("data").asText();
+                System.out.println(name);
+                temp.setName(name);
         }
     }
 
     @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws IOException {
         User temp = UserHandler.getUserBySession(session);
         if (temp != null) {
-            UserHandler.removeUser(temp);
+            try {
+                UserHandler.removeUser(temp);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             System.out.println("User disconnected");
         }
     }

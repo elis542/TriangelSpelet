@@ -20,19 +20,19 @@
             <p id="ErrorMessage"></p>
             <div class="inputID">
                 <label for="quantity">Anslut till ID:</label>
-                <input type="number" id="quantity" name="quantity" min="1" max="10000">
+                <input id="gameIdVal" name="quantity" min="1" max="10000">
             </div>
             <div class="knappar">
-                <button id="SkapaKnapp" onclick="createGame()">Skapa</button>
-                <button id="AnslutKnapp" onclick="joinGame()">Anslut</button>
+                <button id="SkapaKnapp">Skapa</button>
+                <button id="AnslutKnapp">Anslut</button>
             </div>
         </div>
     </main>
     <div id="LowerSection">
         <div id="ServerDiv">
-            <h3 id="TitleDiv">Public servers:</h3>
+            <h3 id="TitleDiv">Servers:</h3>
             <div id="AvailableServers">
-
+                
             </div>
         </div>
         <div id="InfoSection">

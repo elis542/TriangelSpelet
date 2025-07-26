@@ -1,6 +1,5 @@
 const hostAdress = "http://localhost:8080/api";
 
-
 window.onload = async () => {
     try { //Bör skaffa nåpon timeout här
         const response = await fetch(`${hostAdress}/status`
@@ -19,6 +18,14 @@ window.onload = async () => {
     } catch (error) {
         showStatusMessage("NO ANSWER");
     }
+
+    document.getElementById("SkapaKnapp").addEventListener("click", async () => {
+       createGame();
+    })
+
+    document.getElementById("AnslutKnapp").addEventListener("click", async () => {
+        joinGame();
+    })
 };
 
 async function createGame() {
@@ -30,7 +37,6 @@ async function createGame() {
         }
 
         let newGame = await response.json();
-        console.log(newGame);
         if (newGame.successful) {
             sessionStorage.setItem("gameId", newGame.gameId);
             window.location.href = "lobby.html";
@@ -44,7 +50,25 @@ async function createGame() {
 }
 
 async function joinGame() {
+    const gameIdInput = document.getElementById("gameIdVal").value;
 
+    try {
+        const response = await fetch(`${hostAdress}/joinGame`, {
+             method: "POST",
+             body: gameIdInput
+        });
+
+        if(!response.ok) {
+            showErrorMessage("Join game failed! Match does not exist!");
+            return;
+        }
+
+            sessionStorage.setItem("gameId", gameIdInput);
+            window.location.href = "lobby.html";
+
+    } catch (error) {
+        showErrorMessage("Something went wrong! Error thrown");
+    }
 }
 
 function showStatusMessage(message) {

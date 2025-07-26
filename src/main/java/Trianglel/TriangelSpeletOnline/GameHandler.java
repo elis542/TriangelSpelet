@@ -21,4 +21,14 @@ public class GameHandler {
         }
         return null;
     }
+
+    public static void gameChecker() {
+        for (ActiveGame game : gameList) {
+            if (game.getNumberOfPlayers() < 1) {
+                System.out.println(game.getId() + " is inactive");
+                game.setInactive();
+            }
+        }
+        gameList.removeIf(game2 -> !game2.getActive());
+    }
 }

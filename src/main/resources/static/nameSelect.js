@@ -10,7 +10,23 @@ window.onload = () => {
             }, 3000)
             return;
         } else {
-            localStorage.setItem("name", nameInput);
+            let name = nameInput;
+            sessionStorage.setItem("name", sanitize(name));
+            window.location.href = "mainPage.html";
         }
     }
+}
+
+function sanitize(string) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+    };
+
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match) => map[match]);
 }
