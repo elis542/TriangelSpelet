@@ -1,12 +1,68 @@
+#Container {
+    display: flex;
+    align-items: flex-start; /* Så de hamnar i rad, justerat uppåt */
+    gap: 20px; /* Mellanrum mellan chat och main */
+    padding: 20px; /* Lite marginaler runt */
+}
+
 #MainDiv {
     justify-content: center;
     display: grid;
     font-size: clamp(1rem, 2.5vw, 2rem);
 }
 
+#ChatDiv {
+    margin-top: 5%;
+    min-width: 45%;
+    height: 400px;
+    outline: solid;
+    outline-width: 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Trycker inputdelen till botten */
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+#ChatMessages {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#ChatInputArea {
+    display: flex;
+    gap: 5px;
+}
+
+#ChatInput {
+    flex: 1;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#SendButton {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#SendButton:hover {
+    background-color: #0056b3;
+}
+
 #TopHeader {
     color: rgb(29, 29, 185);
     font-size: 400%;
+    margin-bottom: 0px;
 }
 
 #PlayerList {

@@ -12,9 +12,21 @@
 
 <body>
     <main>
+        <div id="Container">
+            <div id="ChatDiv">
+                <<div id="ChatMessages">
+                    <!-- Meddelanden hamnar här -->
+            </div>
+
+            <div id="ChatInputArea">
+                <input type="text" id="ChatInput" placeholder="Skriv ett meddelande..." />
+                <button id="SendButton">Skicka</button>
+            </div>
+        </div>
         <div id="MainDiv">
             <div id="TopDiv">
                 <h1 id="TopHeader">Lobby</h1>
+                <h4 id="GameId">game id: </h4>
             </div>
             <div id="CenterDiv">
                 <div id="PlayerList">
@@ -25,7 +37,7 @@
                 <button id="Start">Starta spel</button> <Button id="Leave">Lämna spel</Button>
             </div>
         </div>
-            
+        </div>
     </main>
     <script src="lobby.js"></script>
 </body>

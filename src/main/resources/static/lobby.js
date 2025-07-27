@@ -33,6 +33,8 @@ socket.addEventListener("close", () => {
 socket.addEventListener("message", (message) => {
     handleMessage(message);
 })
+
+document.getElementById("GameId").innerHTML = `Game ID: ${gameId}`;
 }
 
 //end startup sequence
