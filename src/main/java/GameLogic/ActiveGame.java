@@ -20,7 +20,12 @@ public class ActiveGame {
         for (User user : players) {
             CommunicationHandler.sendTextMessage(user.getSession(), type, data);
         }
+    }
 
+    record chatMessageData(String name, String msg){}
+    public void sendChat(String name, String msg) throws IOException {
+
+        sendPublicMessage("chatMessage", new chatMessageData(name, msg));
     }
 
     public ArrayList<String> getPlayerNames() {
@@ -31,11 +36,10 @@ public class ActiveGame {
         return playerNames;
     }
 
-    record updatePlayersData(String action, String name){};
+    record updatePlayersData(String action, String name){}
     public void addPlayer(User player) throws IOException {
         sendPublicMessage("playerUpdate", new updatePlayersData("add", player.getName()));
         players.add(player);
-
     }
 
     public void removePlayer(User player) throws IOException {

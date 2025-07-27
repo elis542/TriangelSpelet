@@ -26,7 +26,10 @@ public class User {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public ActiveGame getGame() {
+        return game;
     }
 
     public void setName(String name) {this.name = name;}

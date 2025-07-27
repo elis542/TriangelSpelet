@@ -55,8 +55,17 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
         switch (type) {
             case "chatMessage":
-                //System.out.println("ChatMessage in game" + temp.);
-                return;
+                JsonNode dataRoot = typeNode.get("data");
+                String msg = "";
+
+                if (dataRoot != null && dataRoot.has("message")) {
+                    msg = dataRoot.get("message").asText();
+                }
+
+                System.out.println("ChatMessage in game: " + msg);
+
+                temp.getGame().sendChat(temp.getName(), msg);
+                break;
 
             case "connect":
                 String gameId = typeNode.get("data").asText();
@@ -75,10 +84,10 @@ public class CommunicationHandler extends TextWebSocketHandler {
                     sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames()));
                     System.out.println("Player connected to game!");
                 }
-                return;
+                break;
 
             case "setName":
-                String name = typeNode.get("data").asText();
+                String  name= typeNode.get("data").asText();
                 System.out.println(name);
                 temp.setName(name);
         }

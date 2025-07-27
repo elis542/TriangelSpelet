@@ -1,12 +1,12 @@
 let socket;
 let playersInLobby;
 
-//Startup sequence
-
 window.onload = async () => {
     socket = new WebSocket('ws://localhost:8080/ws/game');
     const gameId = sessionStorage.getItem("gameId");
     const name = sessionStorage.getItem("name");
+
+    document.getElementById("GameId").innerHTML = `Game ID: ${gameId}`;
 
     socket.addEventListener("open", (event) => {
     console.log("CONNECTED!");
@@ -21,6 +21,17 @@ document.getElementById("Leave").addEventListener("click", () => {
     window.location.href = "mainPage.html";
 })
 
+document.getElementById("SendButton").addEventListener("click", () => {
+    const message = document.getElementById("ChatInput");
+
+    const data = {
+        message: message.value
+    }
+    sendMessage("chatMessage", data);
+
+    message.value = "";
+})
+
 socket.addEventListener("open", () => {
     sendMessage("setName", name);
     sendMessage("connect", gameId);
@@ -33,11 +44,7 @@ socket.addEventListener("close", () => {
 socket.addEventListener("message", (message) => {
     handleMessage(message);
 })
-
-document.getElementById("GameId").innerHTML = `Game ID: ${gameId}`;
 }
-
-//end startup sequence
 
 async function handleMessage(messageJson) {
 
@@ -64,6 +71,26 @@ async function handleMessage(messageJson) {
                 playersInLobby.splice(playersInLobby.indexOf(message.data.name), 1);
             }
             updatePlayerList();
+            break;
+
+        case "chatMessage": 
+            const senderName = message.data.name;
+            const senderMessage = message.data.msg;
+
+            let x = document.createElement("li");
+            x.innerHTML = `${senderName}: ${senderMessage}`;
+
+            document.getElementById("ChatMessages").appendChild(x);
+        break;
+
+        case "start": 
+            
+
+        break;
+            
+        default:
+            console.error("Bad WebSocket-message received!");
+        break;
     }
 }
 
