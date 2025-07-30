@@ -19,20 +19,28 @@ public class RestControllerClass {
         return ResponseEntity.ok(true);
     }
 
+    public record GetServersResponse(String gameId, int numberOfPlayers) {}
     @GetMapping("/GetServers")
-    public ResponseEntity<ArrayList<ActiveGame>> getServer() {
+    public ResponseEntity<ArrayList<GetServersResponse>> getServer() {
+        ArrayList<GetServersResponse> returnList = new ArrayList<>();
+        ArrayList<ActiveGame> gameList = GameHandler.getGameListNotStarted();
 
-    return ResponseEntity.status(HttpStatus.OK).body(new ArrayList<ActiveGame>()); //Ska fixas
+        for (ActiveGame game : gameList) {
+            returnList.add(new GetServersResponse(game.getId(), game.getNumberOfPlayers()));
+        }
+
+
+    return ResponseEntity.status(HttpStatus.OK).body(returnList);
     }
 
-    private record createGameResponse(boolean successful, String gameId){};
+    public record CreateGameResponse(boolean successful, String gameId){}
     @GetMapping("/CreateGame")
-    public ResponseEntity<createGameResponse> createGame() {
+    public ResponseEntity<CreateGameResponse> createGame() {
         ActiveGame newMatch = new ActiveGame();
         GameHandler.addGame(newMatch);
         System.out.println("Match created ID: " + newMatch.getId());
 
-        createGameResponse answer = new createGameResponse(true, newMatch.getId());
+        CreateGameResponse answer = new CreateGameResponse(true, newMatch.getId());
 
         return ResponseEntity.ok(answer);
     }

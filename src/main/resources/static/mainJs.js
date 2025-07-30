@@ -24,8 +24,10 @@ window.onload = async () => {
     })
 
     document.getElementById("AnslutKnapp").addEventListener("click", async () => {
-        joinGame();
+        joinGame(document.getElementById("gameIdVal").value);
     })
+
+    loadGameList();
 };
 
 async function createGame() {
@@ -49,8 +51,40 @@ async function createGame() {
     }
 }
 
-async function joinGame() {
-    const gameIdInput = document.getElementById("gameIdVal").value;
+async function loadGameList() {
+    const list = document.getElementById("ServerList");
+    let serverList;
+    try {
+        const response = await fetch(`${hostAdress}/GetServers`);
+
+        if (!response.ok) {
+            showErrorMessage("failed to load servers! Server error");
+            return;
+        }
+
+        serverList = await response.json();
+        console.log(serverList);
+
+    } catch (error) {
+        showErrorMessage("something went wrong! Error thrown");
+    }
+
+    for (server of serverList) {
+        let listItem = document.createElement("li");
+        let button = document.createElement("button");
+        button.innerHTML = "join"
+        button.addEventListener("click", () => {
+            joinGame(server.gameId);
+        })
+
+        listItem.innerHTML = `gameId: ${server.gameId} with ${server.numberOfPlayers} players`;
+        listItem.appendChild(button);
+        list.appendChild(listItem);
+    }
+}
+
+async function joinGame(id) {
+    const gameIdInput = id;
 
     try {
         const response = await fetch(`${hostAdress}/joinGame`, {

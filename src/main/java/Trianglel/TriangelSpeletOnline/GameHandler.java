@@ -22,6 +22,17 @@ public class GameHandler {
         return null;
     }
 
+    public static ArrayList<ActiveGame> getGameListNotStarted() {
+        ArrayList<ActiveGame> returnList = new ArrayList<>();
+
+        for (ActiveGame game : gameList) {
+            if (!game.getIsStarted()) {
+                returnList.add(game);
+            }
+        }
+        return returnList;
+    }
+
     public static void gameChecker() {
         for (ActiveGame game : gameList) {
             if (game.getNumberOfPlayers() < 1) {

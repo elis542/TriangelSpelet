@@ -15,6 +15,7 @@ public class ActiveGame {
     private static final int idSize = 10;
     private ArrayList<User> players = new ArrayList<>();
     private boolean active = true;
+    private boolean isStarted = false;
 
     private void sendPublicMessage(String type, Object data) throws IOException {
         for (User user : players) {
@@ -53,6 +54,8 @@ public class ActiveGame {
     }
 
     public boolean getActive() {return active;}
+
+    public boolean getIsStarted() {return isStarted;}
 
     public void setInactive() {active = false;}
 
