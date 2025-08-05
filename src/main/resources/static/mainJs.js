@@ -71,7 +71,11 @@ async function loadGameList() {
 
     for (server of serverList) {
         let listItem = document.createElement("li");
+        listItem.classList.add("ServerListItem");
+
         let button = document.createElement("button");
+        button.classList.add("ServerListButton");
+
         button.innerHTML = "join"
         button.addEventListener("click", () => {
             joinGame(server.gameId);

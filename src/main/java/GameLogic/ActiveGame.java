@@ -70,4 +70,13 @@ public class ActiveGame {
     public int getNumberOfPlayers() {
         return players.size();
     }
+
+    public void startGame() throws IOException {
+        isStarted = true;
+
+        sendPublicMessage("startGame", true);
+    }
+
+    //GAME LOGIC BELOW
+
 }

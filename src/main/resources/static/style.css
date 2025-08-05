@@ -73,6 +73,7 @@
 }
 
 #LowerSection {
+    justify-content: center;
     display: flex;
     gap: 10px;
 }
@@ -108,6 +109,38 @@
 
 #fortsattKnapp:hover {
     background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#ServerList {
+    list-style: none;
+    font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
+    justify-content: center;
+    display: flex;
+}
+
+.ServerListItem {
+    outline: solid;
+    outline-width: 2px;
+    width: 400px;
+    margin: 16px;
+}
+
+.ServerListButton {
+    border-radius: 0.5rem;
+    padding: 0.2rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    margin: 0.5vw;
+    background-color: #0056b3;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ServerListButton:hover {
+
+    cursor: pointer;
+    background-color: #27b41b;
     transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }

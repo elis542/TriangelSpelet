@@ -13,7 +13,7 @@ window.onload = async () => {
 })
 
 document.getElementById("Start").addEventListener("click", () => {
-    sendMessage("LobbyAction", "start");
+    sendMessage("startGame", true);
 })
 
 document.getElementById("Leave").addEventListener("click", () => {
@@ -83,8 +83,10 @@ async function handleMessage(messageJson) {
             document.getElementById("ChatMessages").appendChild(x);
         break;
 
-        case "start": 
-            
+        case "startGame": 
+            if (message.data == true) {
+                window.location.href = "game.html"
+            }
 
         break;
             
@@ -96,7 +98,10 @@ async function handleMessage(messageJson) {
 
 function updatePlayerList() {
     let playerDOM = document.getElementById("PlayerList");
+
     let newPlayerDOM = document.createElement("ul");
+    newPlayerDOM.classList.add("PlayerList");
+
 
     for (player of playersInLobby) {
         let playerObject = document.createElement("li");

@@ -44,8 +44,8 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        User temp = UserHandler.getUserBySession(session);
-        if (temp == null) {
+        User CommandUser = UserHandler.getUserBySession(session);
+        if (CommandUser == null) {
             //session.sendMessage(new TextMessage(message.getPayload()));
             return;
         }
@@ -64,7 +64,7 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
                 System.out.println("ChatMessage in game: " + msg);
 
-                temp.getGame().sendChat(temp.getName(), msg);
+                CommandUser.getGame().sendChat(CommandUser.getName(), msg);
                 break;
 
             case "connect":
@@ -72,16 +72,16 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
                 ActiveGame game = GameHandler.getGame(gameId);
 
-                record responseConnect(boolean state, ArrayList<String> players) {}
+                record responseConnect(boolean state, ArrayList<String> players, boolean isStarted) {}
 
                 if (game == null) {
-                    sendTextMessage(session, "connection", new responseConnect(false, null));
+                    sendTextMessage(session, "connection", new responseConnect(false, null, false));
                     System.out.println("Player tried connecting to nonexistent game");
                     return;
                 } else {
-                    temp.setGame(game);
+                    CommandUser.setGame(game);
 
-                    sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames()));
+                    sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames(), game.getIsStarted()));
                     System.out.println("Player connected to game!");
                 }
                 break;
@@ -89,7 +89,14 @@ public class CommunicationHandler extends TextWebSocketHandler {
             case "setName":
                 String  name= typeNode.get("data").asText();
                 System.out.println(name);
-                temp.setName(name);
+                CommandUser.setName(name);
+
+                break;
+
+            case "startGame": //data -> is just a simple "true" boolean;
+                ActiveGame gameToStart = CommandUser.getGame();
+
+                gameToStart.startGame();
         }
     }
 
