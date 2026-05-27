@@ -81,6 +81,7 @@ async function handleMessage(messageJson) {
             x.innerHTML = `${senderName}: ${senderMessage}`;
 
             document.getElementById("ChatMessages").appendChild(x);
+            
         break;
 
         case "startGame": 
@@ -92,6 +93,7 @@ async function handleMessage(messageJson) {
             
         default:
             console.error("Bad WebSocket-message received!");
+            console.log(message.type);
         break;
     }
 }

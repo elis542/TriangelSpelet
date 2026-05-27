@@ -1,4 +1,4 @@
-const hostAdress = "http://localhost:8080/api";
+const hostAdress = "http://192.168.50.237:8080/api";
 
 window.onload = async () => {
     try { //Bör skaffa nåpon timeout här

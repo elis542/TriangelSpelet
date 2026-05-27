@@ -59,7 +59,7 @@ public class CommunicationHandler extends TextWebSocketHandler {
                 String msg = "";
 
                 if (dataRoot != null && dataRoot.has("message")) {
-                    msg = dataRoot.get("message").asText();
+                    msg = dataRoot.get("message").asText(); //Todo: This needs to be cleaned to prevent injection attacks
                 }
 
                 System.out.println("ChatMessage in game: " + msg);
@@ -76,19 +76,21 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
                 if (game == null) {
                     sendTextMessage(session, "connection", new responseConnect(false, null, false));
-                    System.out.println("Player tried connecting to nonexistent game");
                     return;
                 } else {
                     CommandUser.setGame(game);
 
                     sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames(), game.getIsStarted()));
-                    System.out.println("Player connected to game!");
                 }
                 break;
 
             case "setName":
-                String  name= typeNode.get("data").asText();
-                System.out.println(name);
+                String name= typeNode.get("data").asText();
+
+                if (name == null) {
+                    break;
+                }
+
                 CommandUser.setName(name);
 
                 break;
