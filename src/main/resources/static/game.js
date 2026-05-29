@@ -19,7 +19,6 @@ window.onload = () => {
     sendMessage("setName", username);
     sendMessage("connect", gameId);
 })
-
     renderPlayingField();
 }
 
@@ -34,8 +33,8 @@ function createTriangle(points, id) {
     return poly;
 }
 
-function renderNumberInTriangle(x, y, number, size) {
-    const svg = document.getElementById("MyTriangels");
+function renderNumberInTriangle(x, y, number, size, element) {
+    const svg = document.getElementById(element);
     const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
 
     text.setAttribute("x", x);
@@ -62,18 +61,16 @@ function renderMyTriangels() {
         const tri = createTriangle(points, j);
         svg.appendChild(tri);
 
-        renderNumberInTriangle(x+6, y+3, myTriangles[j].values[0], 14);
-        renderNumberInTriangle(x+triangleSize-12, y+3, myTriangles[j].values[1], 14);
-        renderNumberInTriangle(x+triangleSize/2-5, 25, myTriangles[j].values[2], 14);
+        renderNumberInTriangle(x+6, y+3, myTriangles[j].values[0], 14, "MyTriangels"); //Left
+        renderNumberInTriangle(x+triangleSize-12, y+3, myTriangles[j].values[1], 14, "MyTriangels"); //Right
+        renderNumberInTriangle(x+triangleSize/2-5, 25, myTriangles[j].values[2], 14, "MyTriangels"); //Top
     }
-
-
 }
 
 function renderPlayingField() {
     const svg = document.getElementById('Game');
     const triangleSize = 45;
-    const rows = 100; //Is there a reason for these numbers?
+    const rows = 100; 
     const cols = 100;
 
 for (let row = 0; row < rows; row++) {
@@ -82,21 +79,28 @@ for (let row = 0; row < rows; row++) {
         const y = row * (triangleSize * 0.866);
 
         let points;
-        if ((row + col) % 2 === 0) {
-            
+        if ((row + col) % 2 === 0) { //Render triangles that are pointing upwards
             points = `${x},${y + triangleSize * 0.866} ${x + triangleSize / 2},${y} ${x + triangleSize},${y + triangleSize * 0.866}`;
-        } else {
-            
+        } else { //Render triangles that are pointing down
             points = `${x},${y} ${x + triangleSize / 2},${y + triangleSize * 0.866} ${x + triangleSize},${y}`;
         }
 
         const tri = createTriangle(points, `${row}, ${col}`);
         svg.appendChild(tri);
-        if (row == 5 & column == 5) {
-            renderNumberInTriangle(x+6, y+3, 3, 5);
-            renderNumberInTriangle(x+triangleSize-12, y+3, 4, 5);
-            renderNumberInTriangle(x+triangleSize/2-5, 25, 5, 5);
-        }
+
+        //This needs to be down after because otherwise the triangle is drawn over the text
+         if ((row + col) % 2 === 0) { //Render numbers in upwards triangles
+            if (row == 6 & col == 6) {
+            renderNumberInTriangle(x+8, y+triangleSize-8, 1, 12, "Game"); //Left
+            renderNumberInTriangle(x+triangleSize-13, y+triangleSize-8, 2, 12, "Game"); //Right
+            renderNumberInTriangle(x+triangleSize/2-3, y+18, 3, 12, "Game"); //Top
+
+        }} else { //Render numbers in downward pointing triangles
+            if (row == 5 & col == 6) {
+            renderNumberInTriangle(x+triangleSize-12, y+10, 1, 12, "Game"); //Right
+            renderNumberInTriangle(x+7, y+10, 2, 12, "Game"); //Left
+            renderNumberInTriangle(x+triangleSize/2-3, y+30, 3, 12, "Game"); //Bottom
+            }}
     }
 }}
 
@@ -144,7 +148,6 @@ async function handleMessage(messageJson) {
             case "YourTriangels":
 
             myTriangles = message.data;
-
             renderMyTriangels();
         break;
 

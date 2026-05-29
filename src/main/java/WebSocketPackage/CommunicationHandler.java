@@ -44,10 +44,14 @@ public class CommunicationHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        User CommandUser = UserHandler.getUserBySession(session);
-        if (CommandUser == null) {
+        User commandUser = UserHandler.getUserBySession(session);
+        if (commandUser == null) {
             //session.sendMessage(new TextMessage(message.getPayload()));
             return;
+        }
+        ActiveGame game = null;
+        if (commandUser.getGame() != null) {
+            game = commandUser.getGame();
         }
 
         JsonNode typeNode = mapper.readTree(message.getPayload());
@@ -59,18 +63,17 @@ public class CommunicationHandler extends TextWebSocketHandler {
                 String msg = "";
 
                 if (dataRoot != null && dataRoot.has("message")) {
-                    msg = dataRoot.get("message").asText(); //Todo: This needs to be cleaned to prevent injection attacks
+                    msg = dataRoot.get("message").asText(); //Todo: This needs to be cleaned to prevent XSS attacks, same with the name selection
                 }
 
                 System.out.println("ChatMessage in game: " + msg);
 
-                CommandUser.getGame().sendChat(CommandUser.getName(), msg);
+                commandUser.getGame().sendChat(commandUser.getName(), msg);
                 break;
 
             case "connect":
                 String gameId = typeNode.get("data").asText();
-
-                ActiveGame game = GameHandler.getGame(gameId);
+                game = GameHandler.getGame(gameId);
 
                 record responseConnect(boolean state, ArrayList<String> players, boolean isStarted) {}
 
@@ -78,8 +81,7 @@ public class CommunicationHandler extends TextWebSocketHandler {
                     sendTextMessage(session, "connection", new responseConnect(false, null, false));
                     return;
                 } else {
-                    CommandUser.setGame(game);
-
+                    commandUser.setGame(game);
                     sendTextMessage(session, "connection", new responseConnect(true, game.getPlayerNames(), game.getIsStarted()));
                 }
                 break;
@@ -91,14 +93,18 @@ public class CommunicationHandler extends TextWebSocketHandler {
                     break;
                 }
 
-                CommandUser.setName(name);
-
+                commandUser.setName(name);
                 break;
 
             case "startGame": //data -> is just a simple "true" boolean;
-                ActiveGame gameToStart = CommandUser.getGame();
+                ActiveGame gameToStart = commandUser.getGame();
+                if (game == null) {return;}
+                game.startGame();
+                break;
 
-                gameToStart.startGame();
+            case  "doMove": //Player places a triangle
+                if (game == null) {return;}
+                
         }
     }
 
