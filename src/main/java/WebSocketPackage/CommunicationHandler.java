@@ -102,9 +102,20 @@ public class CommunicationHandler extends TextWebSocketHandler {
                 game.startGame();
                 break;
 
-            case  "doMove": //Player places a triangle
+            case  "doMove": //Player places a triangle TODO: this is not done
                 if (game == null) {return;}
-                
+                JsonNode node = typeNode.get("data");
+
+                try {
+                    int from = Integer.parseInt(node.get("from").asText());
+                    int toX = Integer.parseInt(node.get("toX").asText());
+                    int toY = Integer.parseInt(node.get("toY").asText());
+                    int rotation = Integer.parseInt(node.get("rotation").asText());
+                } catch (NumberFormatException e) {
+                    return;
+                }
+
+
         }
     }
 
